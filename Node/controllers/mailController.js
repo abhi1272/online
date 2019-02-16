@@ -30,16 +30,25 @@ let sendMail = (req, res) => {
         });
 
         // setup email data with unicode symbols
-        let mailOptions = {
+        let mailOptionsOwner = {
             from: 'awzing.help@gmail.com', // sender address
-            to: "abhishek.omex@gmail.com", // list of receivers
+            to: "abhi.omex@outlook.com", // list of receivers
             subject: "Contact-Us", // Subject line
             text: name + ' ' + 'wants to contact you with mobilenumber: ' + mobileNumber +
                 'and email: ' + emailId + 'with message: ' + message
         };
+
+        // Send mail to the user
+        let mailOptionsUser = {
+            from: 'awzing.help@gmail.com', // sender address
+            to: emailId, // list of receivers
+            subject: "Thank You", // Subject line
+            html: '<b>Hi <b>'+ name + " " + 'Thanks for contactig us, we will contact you soon' 
+        };
         // send mail with defined transport object
-        let info = await transporter.sendMail(mailOptions)
+        let info = await transporter.sendMail(mailOptionsOwner)
  
+        await transporter.sendMail(mailOptionsUser)
         await addEmail(name,mobileNumber,emailId,message)
 
         //console.log("Message sent: %s", info.messageId);
@@ -71,7 +80,7 @@ let addEmail = (name,mobileNumber,emailId,message) => {
             let apiResponse = response.generate(true, 'some error occured', 400, err)
             console.log(apiResponse)
         } else {
-            let apiResponse = response.generate(true, 'email saved', 200, result)
+            let apiResponse = response.generate(false, 'email saved', 200, result)
             console.log(apiResponse)
             console.log(result)
         }

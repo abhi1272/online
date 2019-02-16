@@ -25,7 +25,7 @@ let sendMail = (req, res) => {
             service: "Gmail",
             auth: {
                 user: 'awzing.help@gmail.com',
-                pass: 'Abhi@awzgmail5'
+                pass: '******'
             }
         });
 

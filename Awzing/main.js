@@ -779,7 +779,7 @@ var ProductService = /** @class */ (function () {
     function ProductService(_http, Toastr) {
         this._http = _http;
         this.Toastr = Toastr;
-        this.baseUrl = 'http://api.awzing.com/api/v1';
+        this.baseUrl = 'https://api.awzing.com/api/v1';
     }
     ProductService.prototype.createProduct = function (productData) {
         console.log('create product service call');

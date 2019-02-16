@@ -1,13 +1,13 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
-const ProductModel = require('./../models/productModel')
+const EmailModel = require('./../models/emailModel')
 const logger = require('./../libs/loggerLib')
 const check = require('./../libs/checkLib')
 const response = require('./../libs/responseLib')
+const moment = require('moment')
 
+let sendMail = (req, res) => {
 
-let sendMail = (req,res) => {
-   
     let stri = JSON.parse(Object.keys(req.body)[0])
     let name = stri.name
     let mobileNumber = stri.phone
@@ -22,25 +22,25 @@ let sendMail = (req,res) => {
 
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
-            host: "smtp.sendgrid.net",
-            port: 587,
-            secure: false, // true for 465, false for other ports
+            service: "Gmail",
             auth: {
-               // generated ethereal password
+                user: 'awzing.help@gmail.com',
+                pass: 'Abhi@awzgmail5'
             }
         });
 
         // setup email data with unicode symbols
         let mailOptions = {
             from: 'awzing.help@gmail.com', // sender address
-            to: "abhishek.omex@gmail.com,avinash.kumar520@gmail.com", // list of receivers
+            to: "abhishek.omex@gmail.com", // list of receivers
             subject: "Contact-Us", // Subject line
-            text: name + ' ' +  'wants to contact you with mobilenumber: ' + mobileNumber +  
-            'and email: ' + emailId + 'with message: ' + message
+            text: name + ' ' + 'wants to contact you with mobilenumber: ' + mobileNumber +
+                'and email: ' + emailId + 'with message: ' + message
         };
-        console.log(mailOptions)
         // send mail with defined transport object
         let info = await transporter.sendMail(mailOptions)
+ 
+        await addEmail(name,mobileNumber,emailId,message)
 
         //console.log("Message sent: %s", info.messageId);
         res.send(Object.keys(req.body)[0])
@@ -55,6 +55,50 @@ let sendMail = (req,res) => {
 }
 
 
-module.exports = {
-    sendMail: sendMail
+let addEmail = (name,mobileNumber,emailId,message) => {
+
+    let Email = EmailModel({
+        name: name,
+        email: emailId,
+        mobileNumber: mobileNumber,
+        message: message,
+        createdTime: Date()
+    })
+
+    Email.save((err, result) => {
+        if (err) {
+            logger.captureError('some error occured', 'emailController : addemail', 10)
+            let apiResponse = response.generate(true, 'some error occured', 400, err)
+            console.log(apiResponse)
+        } else {
+            let apiResponse = response.generate(true, 'email saved', 200, result)
+            console.log(apiResponse)
+            console.log(result)
+        }
+    })
 }
+
+
+let getAllEmail = (req, res) => {
+
+    EmailModel.find({}).exec((err, result) => {
+        if (err) {
+            logger.captureError('some error occured', 'mailController : getEmail', 10)
+            let apiResponse = response.generate(true, 'some error occured', 400, err)
+            res.send(apiResponse)
+        } else if (check.isEmpty(result)) {
+            let apiResponse = response.generate(true, 'email not found', 500, null)
+            res.send(apiResponse)
+        } else {
+            let apiResponse = response.generate(false, 'email found', 200, result)
+            res.send(apiResponse)
+        }
+    })
+}
+
+
+module.exports = {
+    sendMail: sendMail,
+    getEmail: getAllEmail
+}
+

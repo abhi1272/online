@@ -1,0 +1,26 @@
+.select{
+    margin: 1.5vh 0 -4vw;
+    border-radius: 20%;
+}
+
+.filter{
+    margin-left: 4vw;
+    margin-bottom: 4vh;
+}
+.card{
+    width: 100%;
+    margin-left: 2vw;
+    margin-bottom: 1vh;
+}
+.card-img-top{
+    height: 40vh;
+    width: 100%;
+}
+.clickCurrency{
+    text-decoration: none;
+    color: black;
+}
+.head{
+    font-family: sans-serif;
+    color: grey;
+}

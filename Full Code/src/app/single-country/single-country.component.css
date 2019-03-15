@@ -1,0 +1,11 @@
+.card-img-top{
+    height: 60vh;
+}
+.clickCurrency{
+    text-decoration: none;
+    color: black;
+}
+.head{
+    font-family: sans-serif;
+    color: grey;
+}

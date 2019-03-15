@@ -1,0 +1,24 @@
+<div class="main">
+    <img src="./assets/map.jpg" alt="Snow" style="width:100%;">
+    <div *ngFor="let region of regions; let i = index">
+        <div class="top-left" *ngIf="region === 'Asia'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+        <div class="centered" *ngIf="region === 'Europe'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+        <div class="Africa" *ngIf="region === 'Africa'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+        <div class="Oceania" *ngIf="region === 'Oceania'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+        <div class="Americas" *ngIf="region === 'Americas'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+        <div class="Polar" *ngIf="region === 'Polar'" [routerLink]="['/region',region]">
+            {{region}}
+        </div>
+    </div>
+</div>
+

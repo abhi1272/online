@@ -1,0 +1,62 @@
+<div class="container row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-3 select">
+      <input [(ngModel)]="temp" type="text" class="col-sm-8"  placeholder="Search Country...">
+  </div>
+  <div class="col-sm-6">
+      <h3 class="head">Countries from <strong>{{region1}}</strong> region</h3>
+  </div>
+  <div class="col-sm-2">
+      <a class="btn btn-warning" (click)="goBackToPreviousPage()">Go Back</a>
+  </div>
+</div><br>
+<div class="row filter">
+  <div class="col-sm-6">
+      <input [(ngModel)]="filterText1" type="text" class="col-sm-8"  placeholder="Filter by language..">
+  </div>
+  <div class="col-sm-6">
+      <input [(ngModel)]="filterText2" type="text" class="col-sm-8"  placeholder="Filter by currency..">
+  </div>
+</div>
+<div class="container row">
+  <div class="card" class="col-sm-4" *ngFor="let country of allCountries | 
+        filter1: filterText1 | currencyFilter: filterText2 | selectFilter: temp" style="width: 18rem;">
+    <img class="card-img-top" src="{{country.flag}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{country.name}}</h5>
+      <div class="row">
+        <div class="col-sm-12">
+          <strong>Name: </strong> {{country.name}}
+        </div>
+        <div class="col-sm-12" *ngIf="country.capital !== ''">
+          <strong>Capital: </strong>{{country.capital}}
+        </div>
+        <div class="col-sm-12">
+          <strong>Subregion: </strong>{{country.subregion}}
+        </div>
+        <div class="col-sm-12">
+          <strong>Timezone: </strong>{{country.timezones[0]}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <strong>
+            Currency: </strong><div *ngFor="let curr of country.currencies">
+            <a class="clickCurrency" *ngIf="curr.code !== null" [routerLink]="['/currency',curr.code]">
+              {{curr.name}}</a>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <strong>
+              Language: </strong><div *ngFor="let lang of country.languages">
+            <a class="clickCurrency" *ngIf="lang.iso639_1 !== null" [routerLink]="['/language',lang.iso639_1]">
+              {{lang.name}}</a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <a [routerLink]="['/name',country.name]" class="btn btn-primary">View Detail</a>
+      <br>
+    </div>
+  </div>
+</div>

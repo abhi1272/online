@@ -1,0 +1,14 @@
+.card{
+    width: 100%
+}
+.card-img-top{
+    height: 40vh;
+}
+.clickCurrency{
+    text-decoration: none;
+    color: black;
+}
+.head{
+    font-family: sans-serif;
+    color: grey;
+}

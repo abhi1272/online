@@ -1,0 +1,50 @@
+<div class="container row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-7">
+        <h3 class="head"><strong>"{{currency1}}"</strong>currency code view of Countries</h3>
+    </div>
+    <div class="col-sm-2">
+        <a class="btn btn-warning" (click)="goBackToPreviousPage()">Go Back</a>
+    </div>
+  </div>
+<div class="container">
+  <div class="card mb-4" *ngFor="let country of sameCurrencyCountry">
+    <img class="card-img-top" src="{{country.flag}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{country.name}}</h5>
+      <div class="row">
+        <div class="col-sm-3">
+          <strong>Name: </strong> {{country.name}}
+        </div>
+        <div class="col-sm-3" *ngIf="country.capital !== ''">
+          <strong>Capital: </strong>{{country.capital}}
+        </div>
+        <div class="col-sm-3">
+          <strong>Subregion: </strong>{{country.subregion}}
+        </div>
+        <div class="col-sm-3">
+          <strong>Timezone: </strong>{{country.timezones[0]}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" *ngIf="country.currencies[0].code !== null">
+          <strong>
+            Currency: </strong><div *ngFor="let curr of country.currencies">
+            <a class="clickCurrency" *ngIf="curr.code !== null" [routerLink]="['/currency',curr.code]">
+              {{curr.name}}</a>
+          </div>
+        </div>
+        <div class="col-sm-6" *ngIf="country.languages[0].iso639_1 !== null">
+          <strong>
+            Language: </strong><div *ngFor="let lang of country.languages">
+            <a class="clickCurrency" [routerLink]="['/language',lang.iso639_1]">
+              {{lang.name}}</a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <a [routerLink]="['/name',country.name]" class="btn btn-primary">View Detail</a>
+      <br>
+    </div>
+  </div>
+</div>

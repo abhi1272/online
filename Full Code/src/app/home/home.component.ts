@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import {MapService} from '../map.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,34 +7,13 @@ import {MapService} from '../map.service';
 })
 export class HomeComponent implements OnInit {
 
-  public arr = []
-  public regions;
+  public home = 'home';
 
-  constructor(public MapService:MapService) {
-    console.log('home component called')
+  constructor() {
+    console.log('home constructor called')
    }
 
   ngOnInit() {
-    document.body.classList.add('bg-img');
-    console.log('ngoinit called')
-    this.getCountryName();
-  }
-
-  public getCountryName():any{
-
-    this.MapService.getCountryData().subscribe(
-
-      data=>{
-        //this.regions = data
-        data.map((item)=>{
-          this.arr.push(item.region);
-        })
-          this.regions = new Set(this.arr)
-          console.log(this.regions);
-      }
-
-    )
-
   }
 
 }
